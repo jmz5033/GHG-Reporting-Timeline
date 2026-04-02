@@ -41,9 +41,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .pill-s12 { border-color: #90C2E7; color: #2B6A9C; background: #EBF4FD; }
 .pill-s12:hover { border-color: #6AA8D8; color: #1E5A8A; background: #E0EDFA; }
 .pill-s12.active { background: #3579A8; color: #fff; border-color: #3579A8; }
-.pill-s3 { border-color: #EFC870; color: #9C6B20; background: #FEF7E8; }
-.pill-s3:hover { border-color: #D9A84A; color: #7A5010; background: #FEF0D6; }
-.pill-s3.active { background: #9C6B20; color: #fff; border-color: #9C6B20; }
+.pill-s3 { border-color: #F4A068; color: #9A3D08; background: #FFF3ED; }
+.pill-s3:hover { border-color: #E07840; color: #7A2E04; background: #FFE8D8; }
+.pill-s3.active { background: #AC4A0C; color: #fff; border-color: #AC4A0C; }
 .lane-header { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: .07em; padding: 13px 36px 4px; border-bottom: 1px solid #E9EEF4; border-top: 7px solid #EAECEF; background: #fff; }
 .lane-header:first-of-type { margin-top: 0; }
 .lane-row { display: flex; align-items: stretch; min-height: 64px; border-bottom: 3px solid #F1F5F9; }
@@ -148,9 +148,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .meth-pill.mp-s12 { border-color: #90C2E7; color: #2B6A9C; background: #EBF4FD; }
 .meth-pill.mp-s12:hover { border-color: #6AA8D8; color: #1E5A8A; background: #E0EDFA; }
 .meth-pill.mp-s12.active { background: #3579A8; color: #fff; border-color: #3579A8; }
-.meth-pill.mp-s3  { border-color: #EFC870; color: #9C6B20; background: #FEF7E8; }
-.meth-pill.mp-s3:hover  { border-color: #D9A84A; color: #7A5010; background: #FEF0D6; }
-.meth-pill.mp-s3.active  { background: #9C6B20; color: #fff; border-color: #9C6B20; }
+.meth-pill.mp-s3  { border-color: #F4A068; color: #9A3D08; background: #FFF3ED; }
+.meth-pill.mp-s3:hover  { border-color: #E07840; color: #7A2E04; background: #FFE8D8; }
+.meth-pill.mp-s3.active  { background: #AC4A0C; color: #fff; border-color: #AC4A0C; }
 .meth-entries { padding: 20px 36px; display: flex; flex-direction: column; gap: 14px; }
 .meth-entry { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px 20px; transition: box-shadow .15s; }
 .meth-entry:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
@@ -800,7 +800,7 @@ function buildMethTimeline() {
     var yr=parseFloat(m[1])+(parseInt(m[2])-0.5)/4;
     if(yr<YS||yr>YE)return;
     var cx=xp(yr),cy=rowMap[e.docType]||26;
-    var color=e.scope==='s12'?'#3579A8':e.scope==='s3'?'#9C6B20':'#7B6CA5';
+    var color=e.scope==='s12'?'#90C2E7':e.scope==='s3'?'#F4A068':'#C4B5F0';
     var dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
     dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','4');
     dot.setAttribute('fill',color);dot.setAttribute('stroke','#fff');dot.setAttribute('stroke-width','1');
@@ -1051,9 +1051,9 @@ function buildKCard(e) {
 
   var scopeBar = document.createElement('div');
   scopeBar.className = 'k-card-scope-bar';
-  if (e.scope === 's12') scopeBar.style.background = '#3579A8';
-  else if (e.scope === 's3') scopeBar.style.background = '#9C6B20';
-  else scopeBar.style.background = '#7B6CA5';
+  if (e.scope === 's12') scopeBar.style.background = '#90C2E7';
+  else if (e.scope === 's3') scopeBar.style.background = '#F4A068';
+  else scopeBar.style.background = '#C4B5F0';
   var inner = document.createElement('div');
   inner.className = 'k-card-inner';
   var fwBar = '<div class="k-card-fw-bar">'+(e.framework||e.source)+'</div>';
