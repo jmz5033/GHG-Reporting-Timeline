@@ -790,7 +790,7 @@ function buildMethTimeline() {
     var yr=parseFloat(m[1])+(parseInt(m[2])-0.5)/4;
     if(yr<YS||yr>YE)return;
     var cx=xp(yr),cy=rowMap[e.docType]||26;
-    var color=e.scope==='s12'?'#1E6BA8':e.scope==='s3'?'#B45309':'#7C3AED';
+    var color=e.scope==='s12'?'#1E6BA8':e.scope==='s3'?'#B45309':'#7B6CA5';
     var dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
     dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','4');
     dot.setAttribute('fill',color);dot.setAttribute('stroke','#fff');dot.setAttribute('stroke-width','1');
@@ -1043,7 +1043,7 @@ function buildKCard(e) {
   scopeBar.className = 'k-card-scope-bar';
   if (e.scope === 's12') scopeBar.style.background = '#1E6BA8';
   else if (e.scope === 's3') scopeBar.style.background = '#B45309';
-  else scopeBar.style.background = '#7C3AED';
+  else scopeBar.style.background = '#7B6CA5';
   var inner = document.createElement('div');
   inner.className = 'k-card-inner';
   var fwBar = '<div class="k-card-fw-bar">'+(e.framework||e.source)+'</div>';
