@@ -34,6 +34,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .pill { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1px solid #CBD5E1; background: #fff; color: #64748B; cursor: pointer; transition: all .15s; font-family: inherit; }
 .pill:hover { border-color: #94A3B8; color: #1E2D3D; }
 .pill.active { background: #1E2D3D; color: #fff; border-color: #1E2D3D; }
+/* Scope-colored filter pills */
+.pill-all { border-color: #C4B5F0; color: #7B6CA5; background: #F2EFFA; }
+.pill-all:hover { border-color: #A390D8; color: #5E4E9E; background: #ECE7F8; }
+.pill-all.active { background: #7B6CA5; color: #fff; border-color: #7B6CA5; }
+.pill-s12 { border-color: #90C2E7; color: #2B6A9C; background: #EBF4FD; }
+.pill-s12:hover { border-color: #6AA8D8; color: #1E5A8A; background: #E0EDFA; }
+.pill-s12.active { background: #3579A8; color: #fff; border-color: #3579A8; }
+.pill-s3 { border-color: #EFC870; color: #9C6B20; background: #FEF7E8; }
+.pill-s3:hover { border-color: #D9A84A; color: #7A5010; background: #FEF0D6; }
+.pill-s3.active { background: #9C6B20; color: #fff; border-color: #9C6B20; }
 .lane-header { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: .07em; padding: 13px 36px 4px; border-bottom: 1px solid #E9EEF4; border-top: 7px solid #EAECEF; background: #fff; }
 .lane-header:first-of-type { margin-top: 0; }
 .lane-row { display: flex; align-items: stretch; min-height: 64px; border-bottom: 3px solid #F1F5F9; }
@@ -131,6 +141,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .meth-pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 1px solid #CBD5E1; background: #fff; color: #64748B; cursor: pointer; transition: all .15s; font-family: inherit; white-space: nowrap; }
 .meth-pill:hover { border-color: #94A3B8; color: #1E2D3D; }
 .meth-pill.active { background: #1E2D3D; color: #fff; border-color: #1E2D3D; }
+/* Scope-colored meth-pills — higher specificity wins over .meth-pill.active */
+.meth-pill.mp-all  { border-color: #C4B5F0; color: #7B6CA5; background: #F2EFFA; }
+.meth-pill.mp-all:hover  { border-color: #A390D8; color: #5E4E9E; background: #ECE7F8; }
+.meth-pill.mp-all.active  { background: #7B6CA5; color: #fff; border-color: #7B6CA5; }
+.meth-pill.mp-s12 { border-color: #90C2E7; color: #2B6A9C; background: #EBF4FD; }
+.meth-pill.mp-s12:hover { border-color: #6AA8D8; color: #1E5A8A; background: #E0EDFA; }
+.meth-pill.mp-s12.active { background: #3579A8; color: #fff; border-color: #3579A8; }
+.meth-pill.mp-s3  { border-color: #EFC870; color: #9C6B20; background: #FEF7E8; }
+.meth-pill.mp-s3:hover  { border-color: #D9A84A; color: #7A5010; background: #FEF0D6; }
+.meth-pill.mp-s3.active  { background: #9C6B20; color: #fff; border-color: #9C6B20; }
 .meth-entries { padding: 20px 36px; display: flex; flex-direction: column; gap: 14px; }
 .meth-entry { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px 20px; transition: box-shadow .15s; }
 .meth-entry:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
@@ -287,14 +307,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
   </div>
 </div>
 
-<div id="tab-timeline">
+<div id="tab-timeline-controls">
 <div class="legend" id="legend-row"></div>
 
 <div class="controls">
   <span class="ctrl-label">Filter:</span>
-  <button class="pill active" onclick="setFilter('all',this)">All</button>
-  <button class="pill" onclick="setFilter('s12',this)">Scope 1&amp;2</button>
-  <button class="pill" onclick="setFilter('s3',this)">Scope 3</button>
+  <button class="pill pill-all active" onclick="setFilter('all',this)">All Scopes</button>
+  <button class="pill pill-s12" onclick="setFilter('s12',this)">Scope 1&amp;2</button>
+  <button class="pill pill-s3" onclick="setFilter('s3',this)">Scope 3</button>
   <button class="pill" onclick="setFilter('confirmed',this)">Confirmed</button>
   <button class="pill" onclick="setFilter('ref',this)">Frameworks</button>
   <span style="width:1px;height:16px;background:#D1D5DB;display:inline-block;margin:0 2px;vertical-align:middle;"></span>
@@ -304,8 +324,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 <div id="year-axis-sticky" style="background:#fff;border-bottom:1px solid #E9EEF4;display:flex;align-items:stretch;">
   <div style="width:188px;flex-shrink:0;border-right:1px solid #E9EEF4;"></div>
   <div id="axis-tl-sticky" style="flex:1;position:relative;height:34px;min-width:900px;overflow:hidden;"></div>
+</div><!-- /year-axis-sticky -->
+</div><!-- /tab-timeline-controls -->
 </div><!-- /sticky-top -->
 
+<div id="tab-timeline">
 <div id="main"></div>
 
 </div><!-- /tab-timeline -->
@@ -726,8 +749,9 @@ function addPendingEntry() {
 function switchTab(tab, el) {
   ['tab-btn-timeline','tab-btn-methodology'].forEach(id => { const b=document.getElementById(id); if(b) b.classList.remove('active'); });
   el.classList.add('active');
-  document.getElementById('tab-timeline').style.display    = tab === 'timeline'    ? '' : 'none';
-  document.getElementById('tab-methodology').style.display = tab === 'methodology' ? '' : 'none';
+  document.getElementById('tab-timeline-controls').style.display = tab === 'timeline'    ? '' : 'none';
+  document.getElementById('tab-timeline').style.display           = tab === 'timeline'    ? '' : 'none';
+  document.getElementById('tab-methodology').style.display        = tab === 'methodology' ? '' : 'none';
   if (tab === 'methodology') { renderMethEntries(methFilter); buildWorkstreams(); if(!document.querySelector('#meth-timeline-wrap svg')) buildMethTimeline(); }
 }
 
@@ -776,7 +800,7 @@ function buildMethTimeline() {
     var yr=parseFloat(m[1])+(parseInt(m[2])-0.5)/4;
     if(yr<YS||yr>YE)return;
     var cx=xp(yr),cy=rowMap[e.docType]||26;
-    var color=e.scope==='s12'?'#1E6BA8':e.scope==='s3'?'#B45309':'#7C3AED';
+    var color=e.scope==='s12'?'#3579A8':e.scope==='s3'?'#9C6B20':'#7B6CA5';
     var dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
     dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','4');
     dot.setAttribute('fill',color);dot.setAttribute('stroke','#fff');dot.setAttribute('stroke-width','1');
@@ -929,9 +953,9 @@ function buildMethFilters() {
 
   // Scope filters
   filterBar.appendChild(mkSep());
-  filterBar.appendChild(mkPill('Scope 1&2','scope:s12',false));
-  filterBar.appendChild(mkPill('Scope 3','scope:s3',false));
-  filterBar.appendChild(mkPill('All Scopes','scope:all',false));
+  var s12pill = mkPill('Scope 1&2','scope:s12',false); s12pill.classList.add('mp-s12'); filterBar.appendChild(s12pill);
+  var s3pill  = mkPill('Scope 3','scope:s3',false);    s3pill.classList.add('mp-s3');   filterBar.appendChild(s3pill);
+  var allpill = mkPill('All Scopes','scope:all',false); allpill.classList.add('mp-all'); filterBar.appendChild(allpill);
 
   // Framework filters
   filterBar.appendChild(mkSep());
@@ -1027,9 +1051,9 @@ function buildKCard(e) {
 
   var scopeBar = document.createElement('div');
   scopeBar.className = 'k-card-scope-bar';
-  if (e.scope === 's12') scopeBar.style.background = '#1E6BA8';
-  else if (e.scope === 's3') scopeBar.style.background = '#B45309';
-  else scopeBar.style.background = '#7C3AED';
+  if (e.scope === 's12') scopeBar.style.background = '#3579A8';
+  else if (e.scope === 's3') scopeBar.style.background = '#9C6B20';
+  else scopeBar.style.background = '#7B6CA5';
   var inner = document.createElement('div');
   inner.className = 'k-card-inner';
   var fwBar = '<div class="k-card-fw-bar">'+(e.framework||e.source)+'</div>';
