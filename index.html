@@ -181,6 +181,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .reg-scan-run-btn { padding:9px 24px; font-size:13px; font-weight:600; font-family:inherit; background:#1E2D3D; color:#fff; border:none; border-radius:8px; cursor:pointer; transition:background .15s; white-space:nowrap; flex-shrink:0; }
 .reg-scan-run-btn:hover { background:#2E3F55; }
 .reg-scan-run-btn:disabled { background:#94A3B8; cursor:not-allowed; }
+.scan-gate { position:absolute; inset:0; background:#F8FAFC; display:flex; align-items:center; justify-content:center; z-index:10; }
+.scan-gate-box { background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:36px 40px; width:320px; text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.07); }
+.scan-gate-title { font-size:15px; font-weight:700; color:#1E2D3D; margin-bottom:6px; }
+.scan-gate-sub { font-size:12px; color:#64748B; margin-bottom:20px; }
+.scan-gate-input { width:100%; box-sizing:border-box; padding:9px 12px; font-size:13px; border:1px solid #CBD5E1; border-radius:8px; margin-bottom:12px; font-family:inherit; }
+.scan-gate-input:focus { outline:none; border-color:#7B6CA5; }
+.scan-gate-btn { width:100%; padding:9px; font-size:13px; font-weight:600; font-family:inherit; background:#1E2D3D; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+.scan-gate-btn:hover { background:#2E3F55; }
+.scan-gate-err { font-size:11px; color:#DC2626; margin-top:8px; display:none; }
+.reg-scan-key-row { display:flex; align-items:center; gap:8px; padding:10px 36px 0; }
+.reg-scan-key-row label { font-size:11px; color:#64748B; white-space:nowrap; }
+.reg-scan-key-input { flex:1; max-width:420px; font-size:12px; font-family:monospace; padding:5px 10px; border:1px solid #CBD5E1; border-radius:6px; color:#1E2D3D; }
+.reg-scan-key-input:focus { outline:none; border-color:#7B6CA5; }
+.reg-scan-key-hint { font-size:11px; color:#94A3B8; }
 .reg-scan-loading { display:flex; align-items:center; gap:10px; padding:14px 36px; font-size:12.5px; color:#64748B; background:#FAFBFC; border-bottom:1px solid #F1F5F9; }
 .reg-scan-section { padding:0 36px 6px; border-bottom:2px solid #F1F5F9; }
 .reg-scan-section:last-child { border-bottom:none; }
@@ -407,13 +421,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 
 </div><!-- /tab-timeline -->
 
-<div id="tab-scan" style="display:none">
+<div id="tab-scan" style="display:none;position:relative;">
+  <div class="scan-gate" id="scan-gate">
+    <div class="scan-gate-box">
+      <div class="scan-gate-title">Admin Access Required</div>
+      <div class="scan-gate-sub">This section is restricted. Enter the admin password to continue.</div>
+      <input class="scan-gate-input" id="scan-gate-pw" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')_submitScanGate()" />
+      <button class="scan-gate-btn" onclick="_submitScanGate()">Unlock</button>
+      <div class="scan-gate-err" id="scan-gate-err">Incorrect password.</div>
+    </div>
+  </div>
   <div class="reg-scan-hero">
     <div style="flex:1;">
       <div class="reg-scan-hero-title">&#128269;&nbsp; Regulatory Intelligence Scan</div>
       <div class="reg-scan-hero-sub">Searches the last <strong>3 months</strong> across Comcast's full global footprint for: &nbsp;<strong>updates to tracked regulations</strong> (status, dates, rulings) &nbsp;·&nbsp; <strong>new mandatory GHG/climate reporting</strong> in any jurisdiction where Comcast operates &nbsp;·&nbsp; <strong>GHG methodology changes</strong> from key standard-setters. Each finding is reviewed before adding.</div>
     </div>
     <button class="reg-scan-run-btn" id="reg-scan-btn" onclick="runRegScan()">Run Scan</button>
+  </div>
+  <div class="reg-scan-key-row">
+    <label for="reg-scan-apikey">Anthropic API Key</label>
+    <input class="reg-scan-key-input" id="reg-scan-apikey" type="password" placeholder="sk-ant-…" autocomplete="off" oninput="localStorage.setItem('ant_key',this.value)" />
+    <span class="reg-scan-key-hint">Stored locally in your browser · never sent anywhere except api.anthropic.com</span>
   </div>
   <div class="reg-scan-loading" id="reg-scan-loading" style="display:none">
     <span class="scan-spinner" style="font-size:16px;">&#8635;</span>
@@ -749,6 +777,7 @@ async function analyzeEntry() {
   var manualUrl = (document.getElementById('intake-url')   || {}).value || '';
   input = input.trim(); manualUrl = manualUrl.trim();
   if (!input) return;
+  if (sessionStorage.getItem('scan_auth') !== '1') { switchTab('scan'); return; }
   var btn = document.getElementById('analyze-btn');
   var errEl = document.getElementById('ai-error');
   var resultEl = document.getElementById('ai-result');
@@ -772,9 +801,11 @@ async function analyzeEntry() {
     if (!manualUrl) {
       reqBody.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
     }
+    var apiKey = (document.getElementById('reg-scan-apikey') || {}).value || localStorage.getItem('ant_key') || '';
+    if (!apiKey) { throw new Error('Enter your Anthropic API key above to run the scan.'); }
     var resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify(reqBody)
     });
     var data = await resp.json();
@@ -888,6 +919,25 @@ function dismissPendingReq(idx) {
   _refreshPendingBanner();
 }
 
+  var _SCAN_HASH = 'd9f463c2c8078c5d14e03e5837eb017fe3174f34da3076b11cc9caf04e809e66';
+  async function _checkScanAuth() {
+    if (sessionStorage.getItem('scan_auth') === '1') { document.getElementById('scan-gate').style.display = 'none'; return; }
+    document.getElementById('scan-gate').style.display = 'flex';
+  }
+  async function _submitScanGate() {
+    var pw = document.getElementById('scan-gate-pw').value;
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+    var hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    if (hash === _SCAN_HASH) {
+      sessionStorage.setItem('scan_auth','1');
+      document.getElementById('scan-gate').style.display = 'none';
+      document.getElementById('scan-gate-pw').value = '';
+    } else {
+      var err = document.getElementById('scan-gate-err');
+      err.style.display = 'block';
+      setTimeout(function(){ err.style.display='none'; }, 3000);
+    }
+  }
 async function runRegScan() {
   var btn      = document.getElementById('reg-scan-btn');
   var loadEl   = document.getElementById('reg-scan-loading');
@@ -965,9 +1015,11 @@ async function runRegScan() {
     'Rules: only include items with verifiable sources found via web_search; omit any that duplicate the already-tracked list; return empty arrays [] if nothing found for a category.';
 
   try {
+    var apiKey = (document.getElementById('reg-scan-apikey') || {}).value || localStorage.getItem('ant_key') || '';
+    if (!apiKey) { throw new Error('Enter your Anthropic API key above to run the scan.'); }
     var resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 6000,
@@ -1177,6 +1229,7 @@ function switchTab(tab, el) {
   document.getElementById('tab-timeline').style.display           = tab === 'timeline'    ? '' : 'none';
   document.getElementById('tab-methodology').style.display        = tab === 'methodology' ? '' : 'none';
   document.getElementById('tab-scan').style.display               = tab === 'scan'        ? '' : 'none';
+  if (tab === 'scan') { _checkScanAuth(); }
   if (tab === 'methodology') { renderMethEntries(methFilter); buildWorkstreams(); if(!document.querySelector('#meth-timeline-wrap svg')) buildMethTimeline(); }
 }
 
@@ -1744,6 +1797,7 @@ document.addEventListener('DOMContentLoaded', function() {
   buildWorkstreams();
   buildMethTimeline();
   renderMethEntries('all');
+  var k=localStorage.getItem('ant_key'); if(k){ var el=document.getElementById('reg-scan-apikey'); if(el) el.value=k; }
 });
 </script>
 <div id="ws-popover" class="ws-popover">
