@@ -151,6 +151,72 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .meth-pill.mp-s3  { border-color: #F4A068; color: #9A3D08; background: #FFF3ED; }
 .meth-pill.mp-s3:hover  { border-color: #E07840; color: #7A2E04; background: #FFE8D8; }
 .meth-pill.mp-s3.active  { background: #AC4A0C; color: #fff; border-color: #AC4A0C; }
+
+/* ── Scan for Updates (old methodology scan - legacy styles kept for .scan-item) ── */
+.scan-section { padding: 16px 36px 18px; background: #F8FAFC; border-bottom: 1px solid #E2E8F0; }
+.scan-header { display: flex; align-items: center; gap: 10px; }
+.scan-title { font-size: 13px; font-weight: 600; color: #1E2D3D; }
+.scan-subtitle { font-size: 11.5px; color: #64748B; margin-top: 1px; }
+.scan-btn { padding: 7px 18px; font-size: 12.5px; font-weight: 600; font-family: inherit; background: #1E2D3D; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: background .15s; white-space: nowrap; }
+.scan-btn:hover { background: #2E3F55; }
+.scan-btn:disabled { background: #94A3B8; cursor: not-allowed; }
+.scan-status { font-size: 12px; color: #64748B; margin-top: 12px; display: flex; align-items: center; gap: 8px; }
+.scan-spinner { display: inline-block; animation: ghg-spin 1s linear infinite; font-size: 14px; }
+@keyframes ghg-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.scan-results-header { font-size: 12px; font-weight: 600; color: #475569; margin: 14px 0 10px; }
+.scan-item { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; transition: box-shadow .15s, opacity .2s; }
+.scan-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.scan-item-implication { font-size: 12px; color: #1E2D3D; line-height: 1.55; padding: 8px 10px; background: #F8FAFC; border-radius: 5px; border-left: 3px solid #CBD5E1; margin-bottom: 10px; }
+.scan-item-footer { display: flex; justify-content: space-between; align-items: center; }
+.scan-add-btn { padding: 5px 14px; font-size: 12px; font-weight: 600; font-family: inherit; background: #1E2D3D; color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.scan-add-btn:hover { background: #2E3F55; }
+.scan-dismiss-btn { padding: 5px 12px; font-size: 12px; font-weight: 500; font-family: inherit; background: #fff; color: #64748B; border: 1px solid #CBD5E1; border-radius: 6px; cursor: pointer; transition: all .15s; margin-right: 6px; }
+.scan-dismiss-btn:hover { border-color: #94A3B8; color: #1E2D3D; }
+.scan-error { color: #DC2626; font-size: 12px; margin-top: 10px; }
+
+/* ── Regulatory Scan tab ── */
+.reg-scan-hero { display:flex; align-items:center; gap:20px; padding:20px 36px 18px; background:#fff; border-bottom:1px solid #E2E8F0; }
+.reg-scan-hero-title { font-size:15px; font-weight:700; color:#1E2D3D; margin-bottom:4px; }
+.reg-scan-hero-sub { font-size:12px; color:#64748B; line-height:1.6; max-width:720px; }
+.reg-scan-run-btn { padding:9px 24px; font-size:13px; font-weight:600; font-family:inherit; background:#1E2D3D; color:#fff; border:none; border-radius:8px; cursor:pointer; transition:background .15s; white-space:nowrap; flex-shrink:0; }
+.reg-scan-run-btn:hover { background:#2E3F55; }
+.reg-scan-run-btn:disabled { background:#94A3B8; cursor:not-allowed; }
+.reg-scan-loading { display:flex; align-items:center; gap:10px; padding:14px 36px; font-size:12.5px; color:#64748B; background:#FAFBFC; border-bottom:1px solid #F1F5F9; }
+.reg-scan-section { padding:0 36px 6px; border-bottom:2px solid #F1F5F9; }
+.reg-scan-section:last-child { border-bottom:none; }
+.reg-scan-sec-hdr { display:flex; align-items:center; gap:8px; padding:14px 0 10px; }
+.reg-scan-sec-title { font-size:11px; font-weight:700; color:#1E2D3D; text-transform:uppercase; letter-spacing:.06em; }
+.reg-scan-sec-count { font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; background:#E2E8F0; color:#475569; }
+.reg-scan-sec-hint { font-size:11.5px; color:#94A3B8; }
+.reg-scan-cards { display:flex; flex-direction:column; gap:10px; padding-bottom:16px; }
+.reg-scan-card { background:#fff; border:1px solid #E2E8F0; border-radius:10px; padding:14px 16px; transition:box-shadow .15s,opacity .2s; }
+.reg-scan-card:hover { box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.reg-update-change { font-size:12px; background:#FFFBEB; border:1px solid #FDE68A; border-radius:6px; padding:8px 10px; margin-bottom:8px; line-height:1.5; color:#78350F; }
+.reg-update-change strong { color:#92400E; }
+.reg-scan-impl { font-size:12px; color:#1E2D3D; line-height:1.55; padding:8px 10px; background:#F8FAFC; border-radius:5px; border-left:3px solid #CBD5E1; margin-bottom:10px; }
+.reg-scan-card-footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+.reg-scan-reviewed-btn,.reg-scan-dismiss-btn { padding:4px 12px; font-size:11.5px; font-weight:500; font-family:inherit; background:#fff; color:#64748B; border:1px solid #CBD5E1; border-radius:6px; cursor:pointer; transition:all .15s; }
+.reg-scan-reviewed-btn:hover,.reg-scan-dismiss-btn:hover { border-color:#94A3B8; color:#1E2D3D; }
+.reg-scan-add-btn { padding:4px 14px; font-size:11.5px; font-weight:600; font-family:inherit; background:#1E2D3D; color:#fff; border:none; border-radius:6px; cursor:pointer; transition:background .15s; margin-left:4px; }
+.reg-scan-add-btn:hover { background:#2E3F55; }
+.reg-scan-empty { padding:48px 36px; text-align:center; color:#94A3B8; font-size:14px; }
+.reg-scan-error-msg { color:#DC2626; font-size:12.5px; padding:14px 36px; }
+/* Pending timeline requirements banner */
+.pending-reqs-banner { background:#FFFBEB; border-bottom:2px solid #FDE68A; overflow:hidden; }
+.pending-reqs-hdr { display:flex; align-items:center; gap:10px; padding:9px 36px; cursor:pointer; user-select:none; }
+.pending-reqs-hdr-text { font-size:12.5px; font-weight:600; color:#92400E; flex:1; }
+.pending-reqs-hdr-toggle { font-size:11px; color:#B45309; }
+.pending-reqs-body { padding:12px 36px 16px; display:none; }
+.pending-reqs-body.open { display:block; }
+.pending-req-card { background:#fff; border:1px solid #FDE68A; border-radius:8px; padding:12px 14px; margin-bottom:8px; transition:opacity .2s; }
+.pending-req-card:last-child { margin-bottom:0; }
+.pending-req-title { font-size:12.5px; font-weight:600; color:#1E2D3D; margin-bottom:4px; }
+.pending-req-meta { font-size:11px; color:#64748B; margin-bottom:6px; }
+.pending-req-summary { font-size:12px; color:#475569; line-height:1.55; margin-bottom:8px; }
+.pending-req-impl { font-size:12px; color:#1E2D3D; line-height:1.55; padding:6px 10px; background:#FFFBEB; border-radius:4px; border-left:3px solid #FCD34D; margin-bottom:8px; }
+.pending-req-footer { display:flex; justify-content:space-between; align-items:center; }
+.pending-req-dismiss { padding:3px 10px; font-size:11px; font-weight:500; font-family:inherit; background:#fff; color:#64748B; border:1px solid #CBD5E1; border-radius:5px; cursor:pointer; transition:all .15s; }
+.pending-req-dismiss:hover { border-color:#94A3B8; color:#1E2D3D; }
 .meth-entries { padding: 20px 36px; display: flex; flex-direction: column; gap: 14px; }
 .meth-entry { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px 20px; transition: box-shadow .15s; }
 .meth-entry:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
@@ -302,7 +368,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:2px;">
     <p id="last-updated" style="font-size:13px;color:#9BB5D4;">Large US-headquartered public company &nbsp;·&nbsp; As of April 2026 &nbsp;·&nbsp; Created by Justin Zeh in Claude</p>
     <div class="folder-tabs" style="margin:0;padding:0;">
-      <button class="folder-tab active" id="tab-btn-timeline" onclick="switchTab('timeline',this)">Regulatory Timeline</button><button class="folder-tab" id="tab-btn-methodology" onclick="switchTab('methodology',this)">Methodology Tracker</button>
+      <button class="folder-tab active" id="tab-btn-timeline" onclick="switchTab('timeline',this)">Regulatory Timeline</button><button class="folder-tab" id="tab-btn-methodology" onclick="switchTab('methodology',this)">Methodology Tracker</button><button class="folder-tab" id="tab-btn-scan" onclick="switchTab('scan',this)">Regulatory Scan</button>
     </div>
   </div>
 </div>
@@ -329,11 +395,38 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 </div><!-- /sticky-top -->
 
 <div id="tab-timeline">
+<div id="pending-reqs-banner" class="pending-reqs-banner" style="display:none">
+  <div class="pending-reqs-hdr" onclick="togglePendingReqs()">
+    <span style="font-size:13px;">&#9888;</span>
+    <span class="pending-reqs-hdr-text" id="pending-reqs-hdr-text">Pending timeline additions</span>
+    <span class="pending-reqs-hdr-toggle" id="pending-reqs-toggle">&#9660; show</span>
+  </div>
+  <div class="pending-reqs-body" id="pending-reqs-body"></div>
+</div>
 <div id="main"></div>
 
 </div><!-- /tab-timeline -->
 
-<div id="tab-methodology" style="display:none"><div class="meth-wrap"><div class="ai-intake">
+<div id="tab-scan" style="display:none">
+  <div class="reg-scan-hero">
+    <div style="flex:1;">
+      <div class="reg-scan-hero-title">&#128269;&nbsp; Regulatory Intelligence Scan</div>
+      <div class="reg-scan-hero-sub">Searches the last <strong>3 months</strong> across Comcast's full global footprint for: &nbsp;<strong>updates to tracked regulations</strong> (status, dates, rulings) &nbsp;·&nbsp; <strong>new mandatory GHG/climate reporting</strong> in any jurisdiction where Comcast operates &nbsp;·&nbsp; <strong>GHG methodology changes</strong> from key standard-setters. Each finding is reviewed before adding.</div>
+    </div>
+    <button class="reg-scan-run-btn" id="reg-scan-btn" onclick="runRegScan()">Run Scan</button>
+  </div>
+  <div class="reg-scan-loading" id="reg-scan-loading" style="display:none">
+    <span class="scan-spinner" style="font-size:16px;">&#8635;</span>
+    <span id="reg-scan-loading-txt">Searching the web for recent GHG regulatory developments&hellip;</span>
+  </div>
+  <div class="reg-scan-error-msg" id="reg-scan-error" style="display:none"></div>
+  <div id="reg-scan-results">
+    <div class="reg-scan-empty" id="reg-scan-idle">Click <strong>Run Scan</strong> to search for regulatory and methodology updates from the last 3 months.</div>
+  </div>
+</div>
+
+<div id="tab-methodology" style="display:none"><div class="meth-wrap">
+<div class="ai-intake">
   <div class="ai-intake-header" onclick="toggleIntake()">
     <span style="font-size:15px;color:#7C3AED;">&#10022;</span>
     <span class="ai-intake-title">Add new development with AI analysis</span>
@@ -746,12 +839,344 @@ function addPendingEntry() {
   document.getElementById('intake-toggle-lbl').innerHTML = '&#9660; expand';
 }
 
+// ── Regulatory Scan ───────────────────────────────────────────
+var PENDING_REQS = [];   // approved new-requirement items flagged for timeline
+
+function togglePendingReqs() {
+  var body = document.getElementById('pending-reqs-body');
+  var tog  = document.getElementById('pending-reqs-toggle');
+  var open = body.classList.toggle('open');
+  tog.innerHTML = open ? '&#9650; hide' : '&#9660; show';
+}
+
+function _refreshPendingBanner() {
+  var banner = document.getElementById('pending-reqs-banner');
+  var hdrTxt = document.getElementById('pending-reqs-hdr-text');
+  var body   = document.getElementById('pending-reqs-body');
+  if (!PENDING_REQS.length) { banner.style.display = 'none'; return; }
+  banner.style.display = 'block';
+  hdrTxt.textContent = PENDING_REQS.length + ' pending timeline addition' + (PENDING_REQS.length !== 1 ? 's' : '') + ' from Regulatory Scan — review before adding to data';
+  body.innerHTML = '';
+  PENDING_REQS.forEach(function(req, i) {
+    var matColor = req.materiality === 'High' ? '#DC2626' : req.materiality === 'Medium' ? '#D97706' : '#64748B';
+    var matBg    = req.materiality === 'High' ? '#FEF2F2' : req.materiality === 'Medium' ? '#FFFBEB' : '#F8FAFC';
+    var srcHtml  = req.sourceUrl
+      ? '<a href="' + esc(req.sourceUrl) + '" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href,\'_blank\');return false;" style="font-size:11px;color:#1E6BA8;text-decoration:none;">&#8599; ' + esc(req.sourceName || req.source) + '</a>'
+      : '<span style="font-size:11px;color:#94A3B8;">' + esc(req.sourceName || '') + '</span>';
+    var scopeLabel = req.scope === 's12' ? 'Scope 1&amp;2' : req.scope === 's3' ? 'Scope 3' : 'All Scopes';
+    var card = document.createElement('div');
+    card.className = 'pending-req-card'; card.id = 'preq-' + i;
+    card.innerHTML =
+      '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:4px;">' +
+        '<div style="flex:1;">' +
+          '<div class="pending-req-title">' + esc(req.title) + '</div>' +
+          '<div class="pending-req-meta">' + esc(req.jurisdiction||'') + (req.first_filing ? ' &nbsp;·&nbsp; First filing: ' + esc(req.first_filing) : '') + ' &nbsp;·&nbsp; ' + scopeLabel + (req.assurance ? ' &nbsp;·&nbsp; Assurance: ' + esc(req.assurance) : '') + '</div>' +
+        '</div>' +
+        '<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;background:' + matBg + ';color:' + matColor + ';">' + esc(req.materiality) + '</span>' +
+      '</div>' +
+      '<div class="pending-req-summary">' + esc(req.summary) + '</div>' +
+      '<div class="pending-req-impl"><span style="font-weight:600;color:#92400E;">Comcast: </span>' + esc(req.implication) + '</div>' +
+      '<div class="pending-req-footer">' + srcHtml +
+        '<button class="pending-req-dismiss" onclick="dismissPendingReq(' + i + ')">Dismiss</button>' +
+      '</div>';
+    body.appendChild(card);
+  });
+}
+
+function dismissPendingReq(idx) {
+  PENDING_REQS.splice(idx, 1);
+  _refreshPendingBanner();
+}
+
+async function runRegScan() {
+  var btn      = document.getElementById('reg-scan-btn');
+  var loadEl   = document.getElementById('reg-scan-loading');
+  var loadTxt  = document.getElementById('reg-scan-loading-txt');
+  var resultsEl= document.getElementById('reg-scan-results');
+  var errEl    = document.getElementById('reg-scan-error');
+
+  btn.disabled = true; btn.textContent = 'Scanning\u2026';
+  loadEl.style.display = 'flex'; errEl.style.display = 'none';
+  resultsEl.innerHTML = '';
+
+  // ── Build scan context ────────────────────────────────────────
+  loadTxt.textContent = 'Searching the web \u2014 this may take 20\u201330 seconds\u2026';
+
+  var trackedRegs = [
+    'US Federal — SEC Climate Rule S1/S2 and S3: status PAUSED (nationwide injunction since Mar 2025, litigation ongoing)',
+    'US State — CA SB-253: S1/S2 confirmed (first report FY2025 due 2026), S3 confirmed (first report FY2026 due 2027)',
+    'US State — CA SB-261 CRFOA climate risk disclosure: confirmed (first biennial report Jan 2026)',
+    'EU — CSRD Wave 1 S1/S2 and S3: confirmed (FY2024/FY2025 reports filed with large EU subsidiaries)',
+    'EU — CSRD Wave 2/3: delayed ~2 years by EU Stop-the-Clock Directive (Feb 2026, Directive 2025/794)',
+    'EU — CSRD non-EU parent (>€150M EU revenue): uncertain, expected ~2029+',
+    'Mexico — NIS/CINIF CNBV: S1/S2 confirmed (FY2025), S3 uncertain (exemption possible 2026)',
+    'Japan — SSBJ ISSB-aligned: uncertain, FSA targeting large listed companies from FY2026',
+    'Australia — AASB S1/S2 Group 1: confirmed (FY2024/25, assurance escalates to reasonable ~2028)',
+    'UK — FCA TCFD mandatory: confirmed (FY2023 onward for premium listed); IFRS S2 endorsement: pending (expected 2026)',
+    'Canada — CSA S1/S2 proposed: uncertain (final rule pending)',
+    'GHG Protocol Corporate Standard revision: consultation ongoing (2024–2026)',
+    'GHG Protocol Scope 2 Guidance revision: draft released 2024, public consultation',
+    'TCFD disbanded June 2024, ISSB/IFRS S1/S2 now voluntary global baseline',
+  ];
+  var trackedMeth = METHODOLOGY_ENTRIES.map(function(e){ return '- ' + e.title + ' (' + e.date + ')'; }).join('\n');
+  var areaKeys = Object.keys(IMPACT_AREAS).join(', ');
+
+  // 3-month window: Jan 2026 – Apr 2026
+  var systemPrompt =
+    'You are a GHG regulatory intelligence expert for Comcast. Current date: April 2026.\n\n' +
+    'COMCAST\'S GLOBAL OPERATIONS FOOTPRINT (search for GHG/climate requirements in ALL of these jurisdictions):\n' +
+    '- USA: Comcast Cable (Philadelphia HQ), Xfinity, NBCUniversal (studios, theme parks, broadcast networks) — major operations across all US states, especially CA, PA, TX, FL, NY, IL, MA, CO, NJ, WA\n' +
+    '- UK: Sky UK Ltd (major broadband/TV/telecoms operator — one of the largest UK businesses)\n' +
+    '- Germany: Sky Deutschland GmbH (pay-TV broadcaster)\n' +
+    '- Italy: Sky Italia S.r.l. (pay-TV broadcaster)\n' +
+    '- Austria: Sky Österreich GmbH\n' +
+    '- Ireland: Sky Ireland Ltd (EU subsidiary — CSRD-relevant)\n' +
+    '- Switzerland: Sky presence through Sky Deutschland; NBCUniversal European HQ in Geneva area\n' +
+    '- Netherlands: NBCUniversal operations; Comcast European offices\n' +
+    '- France: NBCUniversal France (Universal Pictures, theme parks presence)\n' +
+    '- Spain: SkyShowtime joint venture with Paramount; NBCUniversal Spain\n' +
+    '- Sweden/Nordics: SkyShowtime streaming operations\n' +
+    '- Poland: SkyShowtime; NBCUniversal Poland\n' +
+    '- Mexico: Comcast Mexico (cable/internet operations; Sky Mexico was divested)\n' +
+    '- Brazil: NBCUniversal Brazil (Universal Pictures, channels)\n' +
+    '- India: NBCUniversal India (channels, licensing)\n' +
+    '- Singapore: NBCUniversal Asia regional hub\n' +
+    '- Japan: NBCUniversal Japan (licensing, media operations)\n' +
+    '- China: NBCUniversal licensing/distribution\n\n' +
+    'ALREADY TRACKED IN DASHBOARD — DO NOT REPEAT:\n' +
+    'Regulatory Timeline:\n' + trackedRegs.join('\n') + '\n\n' +
+    'Methodology Tracker:\n' + trackedMeth + '\n\n' +
+    'YOUR TASK — use web_search to find developments from Jan 2026 – Apr 2026 (last 3 months). Search for three categories:\n\n' +
+    'CATEGORY 1 — REGULATION UPDATES: Has anything changed for the tracked regulations above? ' +
+    'Search for: SEC climate rule court decisions 2026, CSRD omnibus finalization status, California CARB SB-253 implementation guidance, ' +
+    'Japan FSA SSBJ mandatory timeline update, Australia AASB Group 1 guidance, UK FCA IFRS S2 endorsement update, Canada CSA climate disclosure final rule.\n\n' +
+    'CATEGORY 2 — NEW REQUIREMENTS: Are there any NEW mandatory GHG/climate reporting requirements in Comcast\'s jurisdictions not yet tracked? ' +
+    'Search for: Germany mandatory climate reporting 2026, Italy climate disclosure requirements, Spain ESG reporting requirements, ' +
+    'Netherlands sustainability reporting requirements, France CSRD implementation, Poland sustainability reporting, ' +
+    'Brazil climate disclosure regulation, India BRSR climate mandatory, Singapore SGX climate reporting, ' +
+    'any new US state climate disclosure laws (NY, IL, MA, TX, WA, CO etc), any ISSB adoption announcements.\n\n' +
+    'CATEGORY 3 — METHODOLOGY UPDATES: Any new guidance from GHG Protocol, SBTi, ISSB/IFRS Foundation, ISO 14064, IAASB, PCAOB on GHG accounting or assurance.\n\n' +
+    'Return ONLY a raw JSON object (no markdown, no backticks):\n' +
+    '{\n' +
+    '  "regulation_updates": [{"regulation":"name of tracked regulation","jurisdiction":"country/region","change_type":"court_ruling|status_change|date_change|new_guidance|requirement_change","summary":"2-3 sentence description of what changed","implication":"Comcast-specific impact","materiality":"High|Medium|Watch","sourceUrl":"verified URL or empty","sourceName":"short citation"}],\n' +
+    '  "new_requirements": [{"title":"short name max 80 chars","jurisdiction":"country/region","scope":"s12|s3|all","applies_to":"who it covers","first_filing":"e.g. FY2026 data due 2027","assurance":"None|Limited|Reasonable","status":"confirmed|proposed|uncertain","summary":"2-3 sentence summary","implication":"Comcast-specific impact","materiality":"High|Medium|Watch","sourceUrl":"verified URL or empty","sourceName":"short citation"}],\n' +
+    '  "methodology_updates": [{"title":"max 80 chars","framework":"issuing org","scope":"s12|s3|all","docType":"Final Standard|Public Consultation|Whitepaper|Regulatory Filing|Press Release","status":"Final|Under Consultation|Proposed|Exploratory","materiality":"High|Medium|Watch","areas":["keys from: ' + areaKeys + '"],"summary":"2-3 sentence summary","timing":"short phrase","implication":"Comcast-specific impact","sourceUrl":"verified URL or empty","sourceName":"short citation"}]\n' +
+    '}\n\n' +
+    'Rules: only include items with verifiable sources found via web_search; omit any that duplicate the already-tracked list; return empty arrays [] if nothing found for a category.';
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 6000,
+        system: systemPrompt,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: 'Search the web and return GHG regulatory and methodology updates for Comcast\'s global footprint as a JSON object with three arrays.' }]
+      })
+    });
+    var data = await resp.json();
+    if (data.error) throw new Error(data.error.message);
+    var raw = '';
+    (data.content || []).forEach(function(b){ if (b.type === 'text') raw += b.text; });
+    var result;
+    try {
+      result = JSON.parse(raw.replace(/```json|```/g, '').trim());
+      if (typeof result !== 'object' || Array.isArray(result)) throw 0;
+    } catch(e) { throw new Error('Could not parse scan results — try again.'); }
+
+    loadEl.style.display = 'none';
+    _renderRegScanResults(result);
+
+  } catch(err) {
+    loadEl.style.display = 'none';
+    errEl.textContent = 'Scan error: ' + err.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Run Scan';
+  }
+}
+
+function _renderRegScanResults(result) {
+  var updates  = result.regulation_updates  || [];
+  var newReqs  = result.new_requirements    || [];
+  var methUpds = result.methodology_updates || [];
+  var resultsEl = document.getElementById('reg-scan-results');
+  resultsEl.innerHTML = '';
+
+  var total = updates.length + newReqs.length + methUpds.length;
+  if (total === 0) {
+    resultsEl.innerHTML = '<div class="reg-scan-empty">No new material updates found in the last 3 months.</div>';
+    return;
+  }
+
+  function matStyle(m) {
+    return m === 'High'   ? 'background:#FEF2F2;color:#DC2626;' :
+           m === 'Medium' ? 'background:#FFFBEB;color:#D97706;' :
+                            'background:#F8FAFC;color:#64748B;';
+  }
+  function srcLink(item) {
+    return item.sourceUrl
+      ? '<a href="' + esc(item.sourceUrl) + '" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href,\'_blank\');return false;" style="font-size:11px;color:#1E6BA8;text-decoration:none;">&#8599; ' + esc(item.sourceName||item.source||'Source') + '</a>'
+      : '<span style="font-size:11px;color:#94A3B8;">' + esc(item.sourceName||'') + '</span>';
+  }
+
+  function makeSection(icon, title, hint, countId, cardsId) {
+    var sec = document.createElement('div'); sec.className = 'reg-scan-section';
+    sec.innerHTML =
+      '<div class="reg-scan-sec-hdr">' +
+        '<span class="reg-scan-sec-icon">' + icon + '</span>' +
+        '<span class="reg-scan-sec-title">' + title + '</span>' +
+        '<span class="reg-scan-sec-count" id="' + countId + '">0</span>' +
+        '<span class="reg-scan-sec-hint">' + hint + '</span>' +
+      '</div>' +
+      '<div class="reg-scan-cards" id="' + cardsId + '"></div>';
+    return sec;
+  }
+
+  // ── Section 1: Regulation Updates ──────────────────────────
+  var secUpdates = makeSection('&#9650;', 'Updates to Tracked Regulations',
+    'Status, date, or requirement changes for regulations already on the timeline',
+    'rsc-upd-count', 'rsc-upd-cards');
+  resultsEl.appendChild(secUpdates);
+  document.getElementById('rsc-upd-count').textContent = updates.length;
+  if (updates.length === 0) {
+    document.getElementById('rsc-upd-cards').innerHTML = '<div style="font-size:12.5px;color:#94A3B8;padding-bottom:4px;">No updates to tracked regulations found.</div>';
+  }
+  updates.forEach(function(item, i) {
+    var card = document.createElement('div');
+    card.className = 'reg-scan-card update-card'; card.id = 'rsc-upd-' + i;
+    var changeTypeLabel = {court_ruling:'Court Ruling',status_change:'Status Change',date_change:'Date Change',new_guidance:'New Guidance',requirement_change:'Requirement Change'}[item.change_type] || item.change_type || 'Update';
+    card.innerHTML =
+      '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:6px;">' +
+        '<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#1E2D3D;margin-bottom:2px;">' + esc(item.regulation) + '</div>' +
+        '<div style="font-size:11px;color:#64748B;">' + esc(item.jurisdiction||'') + ' &nbsp;·&nbsp; <span style="font-weight:600;color:#B45309;">' + esc(changeTypeLabel) + '</span></div></div>' +
+        '<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;' + matStyle(item.materiality) + '">' + esc(item.materiality) + '</span>' +
+      '</div>' +
+      '<div class="reg-update-change"><strong>What changed:</strong> ' + esc(item.summary) + '</div>' +
+      '<div class="reg-scan-impl"><span style="font-weight:600;color:#475569;">Comcast: </span>' + esc(item.implication) + '</div>' +
+      '<div class="reg-scan-card-footer">' + srcLink(item) +
+        '<button class="reg-scan-reviewed-btn" onclick="_rscRemove(\'rsc-upd-\'+' + i + ')">Mark Reviewed</button>' +
+      '</div>';
+    document.getElementById('rsc-upd-cards').appendChild(card);
+  });
+
+  // ── Section 2: New Requirements ────────────────────────────
+  var secNew = makeSection('&#43;', 'New Reporting Requirements',
+    'New or newly discovered mandatory GHG/climate reporting in Comcast\u2019s jurisdictions',
+    'rsc-new-count', 'rsc-new-cards');
+  resultsEl.appendChild(secNew);
+  document.getElementById('rsc-new-count').textContent = newReqs.length;
+  if (newReqs.length === 0) {
+    document.getElementById('rsc-new-cards').innerHTML = '<div style="font-size:12.5px;color:#94A3B8;padding-bottom:4px;">No new requirements found.</div>';
+  }
+  newReqs.forEach(function(item, i) {
+    var card = document.createElement('div');
+    card.className = 'reg-scan-card'; card.id = 'rsc-new-' + i;
+    var scopeLabel = item.scope === 's12' ? 'Scope 1&amp;2' : item.scope === 's3' ? 'Scope 3' : 'All Scopes';
+    card.innerHTML =
+      '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:5px;">' +
+        '<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#1E2D3D;margin-bottom:2px;">' + esc(item.title) + '</div>' +
+        '<div style="font-size:11px;color:#64748B;">' + esc(item.jurisdiction||'') +
+          (item.first_filing ? ' &nbsp;·&nbsp; First filing: ' + esc(item.first_filing) : '') +
+          ' &nbsp;·&nbsp; ' + scopeLabel +
+          (item.assurance ? ' &nbsp;·&nbsp; ' + esc(item.assurance) + ' assurance' : '') + '</div></div>' +
+        '<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;' + matStyle(item.materiality) + '">' + esc(item.materiality) + '</span>' +
+      '</div>' +
+      '<div style="font-size:12px;color:#475569;line-height:1.55;margin-bottom:8px;">' + esc(item.summary) + '</div>' +
+      '<div class="reg-scan-impl"><span style="font-weight:600;color:#475569;">Comcast: </span>' + esc(item.implication) + '</div>' +
+      '<div class="reg-scan-card-footer">' + srcLink(item) +
+        '<div>' +
+          '<button class="reg-scan-dismiss-btn" onclick="_rscRemove(\'rsc-new-\'+' + i + ')">Dismiss</button>' +
+          '<button class="reg-scan-add-btn" onclick="_addPendingReq(' + i + ',\'rsc-new-\'+' + i + ')">+ Flag for Timeline</button>' +
+        '</div>' +
+      '</div>';
+    document.getElementById('rsc-new-cards').appendChild(card);
+  });
+  // stash new_requirements for the Flag action
+  window._rscNewItems = newReqs;
+
+  // ── Section 3: Methodology Updates ────────────────────────
+  var secMeth = makeSection('&#9654;', 'GHG Methodology Updates',
+    'Updates to GHG accounting standards and frameworks',
+    'rsc-meth-count', 'rsc-meth-cards');
+  resultsEl.appendChild(secMeth);
+  document.getElementById('rsc-meth-count').textContent = methUpds.length;
+  if (methUpds.length === 0) {
+    document.getElementById('rsc-meth-cards').innerHTML = '<div style="font-size:12.5px;color:#94A3B8;padding-bottom:4px;">No methodology updates found.</div>';
+  }
+  methUpds.forEach(function(item, i) {
+    var areaHtml = (item.areas||[]).map(function(a){
+      var ar = IMPACT_AREAS[a]; if (!ar) return '';
+      return '<span style="font-size:9.5px;padding:1px 6px;border-radius:10px;font-weight:500;background:' + ar.color + '18;color:' + ar.color + ';">' + ar.label + '</span>';
+    }).filter(Boolean).join(' ');
+    var card = document.createElement('div');
+    card.className = 'reg-scan-card'; card.id = 'rsc-meth-' + i;
+    card.innerHTML =
+      '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:5px;">' +
+        '<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#1E2D3D;margin-bottom:2px;">' + esc(item.title) + '</div>' +
+        '<div style="font-size:11px;color:#64748B;">' + esc(item.framework||'') + (item.timing ? ' &nbsp;·&nbsp; ' + esc(item.timing) : '') + '</div></div>' +
+        '<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;' + matStyle(item.materiality) + '">' + esc(item.materiality) + '</span>' +
+      '</div>' +
+      (areaHtml ? '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;">' + areaHtml + '</div>' : '') +
+      '<div style="font-size:12px;color:#475569;line-height:1.55;margin-bottom:8px;">' + esc(item.summary) + '</div>' +
+      '<div class="reg-scan-impl"><span style="font-weight:600;color:#475569;">Comcast: </span>' + esc(item.implication) + '</div>' +
+      '<div class="reg-scan-card-footer">' + srcLink(item) +
+        '<div>' +
+          '<button class="reg-scan-dismiss-btn" onclick="_rscRemove(\'rsc-meth-\'+' + i + ')">Dismiss</button>' +
+          '<button class="reg-scan-add-btn" onclick="_addMethEntry(' + i + ',\'rsc-meth-\'+' + i + ')">+ Add to Methodology</button>' +
+        '</div>' +
+      '</div>';
+    document.getElementById('rsc-meth-cards').appendChild(card);
+  });
+  window._rscMethItems = methUpds;
+}
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function _rscRemove(id) {
+  var el = document.getElementById(id); if (!el) return;
+  el.style.opacity = '0';
+  setTimeout(function(){ if (el.parentNode) el.parentNode.removeChild(el); }, 200);
+}
+
+function _addPendingReq(idx, cardId) {
+  var item = (window._rscNewItems||[])[idx]; if (!item) return;
+  PENDING_REQS.push(item);
+  _refreshPendingBanner();
+  _rscRemove(cardId);
+}
+
+function _addMethEntry(idx, cardId) {
+  var item = (window._rscMethItems||[])[idx]; if (!item) return;
+  var now = new Date();
+  METHODOLOGY_ENTRIES.unshift({
+    id: Date.now() + idx,
+    date: now.getFullYear() + '-Q' + Math.ceil((now.getMonth()+1)/3),
+    title: item.title||'', source: item.source||item.framework||'',
+    framework: item.framework||'', sourceUrl: item.sourceUrl||'',
+    sourceName: item.sourceName||item.framework||'',
+    docType: item.docType||'Public Consultation',
+    status: item.status||'Under Consultation',
+    materiality: item.materiality||'Watch',
+    scope: item.scope||'all', areas: item.areas||[],
+    summary: item.summary||'', timing: item.timing||'', implication: item.implication||''
+  });
+  renderMethEntries(methFilter); buildMethTimeline();
+  _rscRemove(cardId);
+}
+// ─────────────────────────────────────────────────────────────
+
 function switchTab(tab, el) {
-  ['tab-btn-timeline','tab-btn-methodology'].forEach(id => { const b=document.getElementById(id); if(b) b.classList.remove('active'); });
+  ['tab-btn-timeline','tab-btn-methodology','tab-btn-scan'].forEach(id => { const b=document.getElementById(id); if(b) b.classList.remove('active'); });
   el.classList.add('active');
   document.getElementById('tab-timeline-controls').style.display = tab === 'timeline'    ? '' : 'none';
   document.getElementById('tab-timeline').style.display           = tab === 'timeline'    ? '' : 'none';
   document.getElementById('tab-methodology').style.display        = tab === 'methodology' ? '' : 'none';
+  document.getElementById('tab-scan').style.display               = tab === 'scan'        ? '' : 'none';
   if (tab === 'methodology') { renderMethEntries(methFilter); buildWorkstreams(); if(!document.querySelector('#meth-timeline-wrap svg')) buildMethTimeline(); }
 }
 
