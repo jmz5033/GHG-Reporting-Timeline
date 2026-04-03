@@ -151,6 +151,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 .meth-pill.mp-s3  { border-color: #F4A068; color: #9A3D08; background: #FFF3ED; }
 .meth-pill.mp-s3:hover  { border-color: #E07840; color: #7A2E04; background: #FFE8D8; }
 .meth-pill.mp-s3.active  { background: #AC4A0C; color: #fff; border-color: #AC4A0C; }
+
+/* ── Scan for Updates ── */
+.scan-section { padding: 16px 36px 18px; background: #F8FAFC; border-bottom: 1px solid #E2E8F0; }
+.scan-header { display: flex; align-items: center; gap: 10px; }
+.scan-title { font-size: 13px; font-weight: 600; color: #1E2D3D; }
+.scan-subtitle { font-size: 11.5px; color: #64748B; margin-top: 1px; }
+.scan-btn { padding: 7px 18px; font-size: 12.5px; font-weight: 600; font-family: inherit; background: #1E2D3D; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: background .15s; white-space: nowrap; }
+.scan-btn:hover { background: #2E3F55; }
+.scan-btn:disabled { background: #94A3B8; cursor: not-allowed; }
+.scan-status { font-size: 12px; color: #64748B; margin-top: 12px; display: flex; align-items: center; gap: 8px; }
+.scan-spinner { display: inline-block; animation: ghg-spin 1s linear infinite; font-size: 14px; }
+@keyframes ghg-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.scan-results-header { font-size: 12px; font-weight: 600; color: #475569; margin: 14px 0 10px; }
+.scan-item { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; transition: box-shadow .15s, opacity .2s; }
+.scan-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.scan-item-implication { font-size: 12px; color: #1E2D3D; line-height: 1.55; padding: 8px 10px; background: #F8FAFC; border-radius: 5px; border-left: 3px solid #CBD5E1; margin-bottom: 10px; }
+.scan-item-footer { display: flex; justify-content: space-between; align-items: center; }
+.scan-add-btn { padding: 5px 14px; font-size: 12px; font-weight: 600; font-family: inherit; background: #1E2D3D; color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.scan-add-btn:hover { background: #2E3F55; }
+.scan-dismiss-btn { padding: 5px 12px; font-size: 12px; font-weight: 500; font-family: inherit; background: #fff; color: #64748B; border: 1px solid #CBD5E1; border-radius: 6px; cursor: pointer; transition: all .15s; margin-right: 6px; }
+.scan-dismiss-btn:hover { border-color: #94A3B8; color: #1E2D3D; }
+.scan-error { color: #DC2626; font-size: 12px; margin-top: 10px; }
 .meth-entries { padding: 20px 36px; display: flex; flex-direction: column; gap: 14px; }
 .meth-entry { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px 20px; transition: box-shadow .15s; }
 .meth-entry:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
@@ -333,7 +355,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Ar
 
 </div><!-- /tab-timeline -->
 
-<div id="tab-methodology" style="display:none"><div class="meth-wrap"><div class="ai-intake">
+<div id="tab-methodology" style="display:none"><div class="meth-wrap">
+
+<div class="scan-section" id="scan-section">
+  <div class="scan-header">
+    <span style="font-size:16px;flex-shrink:0;">&#128269;</span>
+    <div style="flex:1;">
+      <div class="scan-title">Scan for new regulatory &amp; methodology updates</div>
+      <div class="scan-subtitle">Claude searches the web for recent GHG developments not yet in this tracker</div>
+    </div>
+    <button class="scan-btn" id="scan-btn" onclick="runScan()">&#9670;&nbsp; Scan for Updates</button>
+  </div>
+  <div class="scan-status" id="scan-status" style="display:none">
+    <span class="scan-spinner">&#8635;</span> Searching the web for recent GHG regulatory &amp; methodology updates&hellip;
+  </div>
+  <div id="scan-results"></div>
+  <div class="scan-error" id="scan-error" style="display:none"></div>
+</div>
+
+<div class="ai-intake">
   <div class="ai-intake-header" onclick="toggleIntake()">
     <span style="font-size:15px;color:#7C3AED;">&#10022;</span>
     <span class="ai-intake-title">Add new development with AI analysis</span>
@@ -745,6 +785,174 @@ function addPendingEntry() {
   document.getElementById('intake-body').classList.remove('open');
   document.getElementById('intake-toggle-lbl').innerHTML = '&#9660; expand';
 }
+
+// ── Scan for Updates ─────────────────────────────────────────
+var _scanItems = [];
+
+async function runScan() {
+  var btn       = document.getElementById('scan-btn');
+  var statusEl  = document.getElementById('scan-status');
+  var resultsEl = document.getElementById('scan-results');
+  var errEl     = document.getElementById('scan-error');
+
+  btn.disabled = true; btn.textContent = 'Scanning\u2026';
+  statusEl.style.display = 'flex';
+  resultsEl.innerHTML = '';
+  errEl.style.display = 'none';
+
+  // Build context from already-tracked data
+  var trackedRegs = [
+    'SEC Climate Rule S1/S2 and S3 (paused — nationwide injunction)',
+    'CA SB-253 S1/S2 (confirmed, first report FY2025) and S3 (confirmed, first report FY2026)',
+    'CA SB-261 CRFOA climate risk disclosure (confirmed)',
+    'EU CSRD Wave 1 S1/S2 and S3 (confirmed)',
+    'EU CSRD Wave 2/3 S1/S2 — delayed by EU stop-the-clock directive Feb 2026',
+    'EU CSRD non-EU parent companies (>€150M EU revenue, uncertain ~2029)',
+    'Mexico NIS/CINIF CNBV S1/S2 (confirmed) and S3 (uncertain)',
+    'Japan SSBJ ISSB-aligned S1/S2 (uncertain, FY2026 target)',
+    'Australia AASB S1/S2 Group 1 (confirmed, FY2024/25)',
+    'UK FCA TCFD mandatory (confirmed) and IFRS S2 endorsement (pending)',
+    'Canada CSA S1/S2 proposed (uncertain)',
+    'GHG Protocol Corporate Standard revision (consultation ongoing)',
+    'GHG Protocol Scope 2 Guidance revision (draft 2024)',
+    'GHG Protocol Scope 3 standard review',
+    'TCFD disbanded June 2024, ISSB/IFRS S1/S2 now global baseline',
+  ];
+  var trackedMeth = METHODOLOGY_ENTRIES.map(function(e){ return '- ' + e.title + ' (' + e.date + ')'; }).join('\n');
+  var areaKeys = Object.keys(IMPACT_AREAS).join(', ');
+
+  var systemPrompt =
+    'You are a GHG accounting expert tracking regulatory and methodology changes for Comcast — a large US-headquartered public company. ' +
+    'Comcast uses operational control boundary, has a large VPPA/REC portfolio for Scope 2 market-based, reports all 15 Scope 3 categories, and needs CSRD assurance for EU subsidiaries.\n\n' +
+    'Current date: April 2026.\n\n' +
+    'ALREADY TRACKED — REGULATORY TIMELINE:\n' + trackedRegs.join('\n') + '\n\n' +
+    'ALREADY TRACKED — METHODOLOGY TRACKER:\n' + trackedMeth + '\n\n' +
+    'Use web_search to identify NEW developments from roughly Oct 2025 – Apr 2026 that are NOT already listed above. Search for:\n' +
+    '1. Status changes to tracked regulations (court decisions on SEC rule, CSRD omnibus finalization, CA CARB implementation guidance)\n' +
+    '2. New jurisdictions adopting mandatory GHG/climate reporting\n' +
+    '3. Updates from GHG Protocol, SBTi, ISSB/IFRS Foundation, ISO 14064, IAASB, PCAOB on standards or assurance\n' +
+    '4. Significant new guidance on Scope 2 market instruments, Scope 3 boundary, or biogenic carbon\n\n' +
+    'Return ONLY a raw JSON array of 2–5 genuinely new findings (or [] if nothing material). Each object:\n' +
+    '{"title":"max 80 chars","framework":"issuing org","source":"org name","sourceUrl":"verified URL or empty string",' +
+    '"sourceName":"short citation","docType":"Final Standard|Public Consultation|Whitepaper|Meeting Minutes|Regulatory Filing|Press Release",' +
+    '"status":"Final|Under Consultation|Proposed|Exploratory","materiality":"High|Medium|Watch","scope":"s12|s3|all",' +
+    '"areas":["keys from: ' + areaKeys + '"],"summary":"2-3 sentence objective summary","timing":"short phrase e.g. Effective 2027",' +
+    '"implication":"1-2 sentences on specific impact to Comcast GHG reporting"}\n\n' +
+    'Rules: only items with verifiable sources; no duplicates of the above lists; no markdown or backticks — raw JSON array only.';
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        system: systemPrompt,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: 'Search the web and return recent GHG regulatory and methodology updates as a JSON array.' }]
+      })
+    });
+    var data = await resp.json();
+    if (data.error) throw new Error(data.error.message);
+    var raw = '';
+    (data.content || []).forEach(function(b){ if (b.type === 'text') raw += b.text; });
+    var items;
+    try { items = JSON.parse(raw.replace(/```json|```/g, '').trim()); if (!Array.isArray(items)) throw 0; }
+    catch(e) { throw new Error('Could not parse scan results — try again.'); }
+
+    statusEl.style.display = 'none';
+    _scanItems = items;
+
+    if (items.length === 0) {
+      resultsEl.innerHTML = '<div style="padding:14px 0;font-size:13px;color:#64748B;">No new material updates found. The tracker appears up to date.</div>';
+      return;
+    }
+    var hdr = document.createElement('div');
+    hdr.className = 'scan-results-header';
+    hdr.textContent = 'Found ' + items.length + ' potential update' + (items.length !== 1 ? 's' : '') + ' — review and approve to add:';
+    resultsEl.appendChild(hdr);
+    items.forEach(function(item, i){ resultsEl.appendChild(buildScanCard(item, i)); });
+
+  } catch(err) {
+    statusEl.style.display = 'none';
+    errEl.textContent = 'Scan error: ' + err.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '&#9670;&nbsp; Scan for Updates';
+  }
+}
+
+function buildScanCard(item, idx) {
+  var matColor = item.materiality === 'High' ? '#DC2626' : item.materiality === 'Medium' ? '#D97706' : '#64748B';
+  var matBg    = item.materiality === 'High' ? '#FEF2F2' : item.materiality === 'Medium' ? '#FFFBEB' : '#F8FAFC';
+  var areaHtml = (item.areas || []).map(function(a){
+    var ar = IMPACT_AREAS[a]; if (!ar) return '';
+    return '<span style="font-size:9.5px;padding:1px 6px;border-radius:10px;font-weight:500;background:' + ar.color + '18;color:' + ar.color + ';">' + ar.label + '</span>';
+  }).filter(Boolean).join(' ');
+  var srcHtml = item.sourceUrl
+    ? '<a href="' + esc(item.sourceUrl) + '" target="_blank" rel="noopener noreferrer" onclick="window.open(this.href,\'_blank\');return false;" style="font-size:11px;color:#1E6BA8;text-decoration:none;">&#8599; ' + esc(item.sourceName || item.source) + '</a>'
+    : '<span style="font-size:11px;color:#94A3B8;">' + esc(item.sourceName || item.source) + '</span>';
+
+  var card = document.createElement('div');
+  card.className = 'scan-item'; card.id = 'scan-item-' + idx;
+  card.innerHTML =
+    '<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:5px;">' +
+      '<div style="flex:1;">' +
+        '<div style="font-size:13px;font-weight:600;color:#1E2D3D;line-height:1.4;margin-bottom:3px;">' + esc(item.title) + '</div>' +
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:10.5px;color:#64748B;">' +
+          esc(item.framework || item.source) +
+          (item.timing ? ' &nbsp;·&nbsp; ' + esc(item.timing) : '') +
+        '</div>' +
+      '</div>' +
+      '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;background:' + matBg + ';color:' + matColor + ';">' + esc(item.materiality) + '</span>' +
+    '</div>' +
+    (areaHtml ? '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;">' + areaHtml + '</div>' : '') +
+    '<div style="font-size:12px;color:#475569;line-height:1.55;margin-bottom:8px;">' + esc(item.summary) + '</div>' +
+    '<div class="scan-item-implication"><span style="font-weight:600;color:#475569;">Comcast: </span>' + esc(item.implication) + '</div>' +
+    '<div class="scan-item-footer">' + srcHtml +
+      '<div>' +
+        '<button class="scan-dismiss-btn" onclick="dismissScanItem(' + idx + ')">Dismiss</button>' +
+        '<button class="scan-add-btn" onclick="approveScanItem(' + idx + ')">+ Add to Tracker</button>' +
+      '</div>' +
+    '</div>';
+  return card;
+}
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function approveScanItem(idx) {
+  var item = _scanItems[idx]; if (!item) return;
+  var now = new Date();
+  METHODOLOGY_ENTRIES.unshift({
+    id: Date.now() + idx,
+    date: now.getFullYear() + '-Q' + Math.ceil((now.getMonth()+1)/3),
+    title: item.title || '', source: item.source || '',
+    framework: item.framework || item.source || '',
+    sourceUrl: item.sourceUrl || '', sourceName: item.sourceName || item.source || '',
+    docType: item.docType || 'Public Consultation',
+    status: item.status || 'Under Consultation',
+    materiality: item.materiality || 'Watch',
+    scope: item.scope || 'all',
+    areas: item.areas || [],
+    summary: item.summary || '', timing: item.timing || '', implication: item.implication || ''
+  });
+  renderMethEntries(methFilter);
+  buildMethTimeline();
+  _removeScanCard(idx);
+}
+
+function dismissScanItem(idx) { _removeScanCard(idx); }
+
+function _removeScanCard(idx) {
+  var card = document.getElementById('scan-item-' + idx);
+  if (!card) return;
+  card.style.opacity = '0';
+  setTimeout(function(){ if (card.parentNode) card.parentNode.removeChild(card); }, 200);
+}
+// ─────────────────────────────────────────────────────────────
 
 function switchTab(tab, el) {
   ['tab-btn-timeline','tab-btn-methodology'].forEach(id => { const b=document.getElementById(id); if(b) b.classList.remove('active'); });
