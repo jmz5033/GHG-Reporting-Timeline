@@ -777,6 +777,7 @@ async function analyzeEntry() {
   var manualUrl = (document.getElementById('intake-url')   || {}).value || '';
   input = input.trim(); manualUrl = manualUrl.trim();
   if (!input) return;
+  if (sessionStorage.getItem('scan_auth') !== '1') { switchTab('scan'); return; }
   var btn = document.getElementById('analyze-btn');
   var errEl = document.getElementById('ai-error');
   var resultEl = document.getElementById('ai-result');
